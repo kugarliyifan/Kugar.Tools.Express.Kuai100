@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kugar.Tools.Express.Kuai100", "Kugar.Tools.Express.Kuai100\Kugar.Tools.Express.Kuai100.csproj", "{96AAD7B0-C410-4BFD-84FE-EDBD21A79EC9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96AAD7B0-C410-4BFD-84FE-EDBD21A79EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96AAD7B0-C410-4BFD-84FE-EDBD21A79EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96AAD7B0-C410-4BFD-84FE-EDBD21A79EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96AAD7B0-C410-4BFD-84FE-EDBD21A79EC9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A9CC766-1A09-4C8D-9E2B-A2D47E551D20}
+	EndGlobalSection
+EndGlobal
