@@ -192,6 +192,11 @@ namespace Kugar.Tools.Express
             };
         }
 
+        public static async Task<Kuai100QueryResult> GetExpressLogsFreeAsync(string expressName, string expressCode)
+        {
+
+        }
+
         /// <summary>
         /// 解码订阅推送收到的数据
         /// </summary>
