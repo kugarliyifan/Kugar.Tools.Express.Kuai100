@@ -8,6 +8,7 @@ using Kugar.Core.BaseStruct;
 using Kugar.Core.ExtMethod;
 using Kugar.Core.Network;
 using Kugar.Tools.Express.DTO;
+using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -20,7 +21,18 @@ namespace Kugar.Tools.Express
     {
         private static Lazy<Dictionary<string, string>> _compareNameMappers = new Lazy<Dictionary<string, string>>(readFile);
 
-        public static string MapJsonFilePath { set; get; } = "kuai100.json";
+        //public static string MapJsonFilePath { set; get; } = "kuai100.json";
+
+        /// <summary>
+        /// 返回所有支持的物理公司名称
+        /// </summary>
+        public static string[] ExpressNames
+        {
+            get
+            {
+                return _compareNameMappers.Value.Keys.ToArrayEx();
+            }
+        }
 
         /// <summary>
         /// 查询快递单记录
@@ -35,9 +47,16 @@ namespace Kugar.Tools.Express
         {
             const string url = "https://poll.kuaidi100.com/poll/query.do";
 
+            var comName = getExpressNameToCode(expressName);
+
+            if (string.IsNullOrEmpty(comName))
+            {
+                return new FailResultReturn<Kuai100QueryResult>("查找不到物流公司对应的编号,请检查名称是否正确");
+            }
+
             var args = new JObject()
             {
-                ["com"] = getExpressNameToCode(expressName),
+                ["com"] = comName,
                 ["num"] = expressCode,
                 ["phone"] = mobile,
                 ["resultv2"] = 1
@@ -93,19 +112,26 @@ namespace Kugar.Tools.Express
         /// 订阅快递单号的推送
         /// </summary>
         /// <param name="customerID">公司编号</param>
-        /// <param name="expressName"></param>
-        /// <param name="expressCode"></param>
-        /// <param name="callback"></param>
-        /// <param name="phone"></param>
+        /// <param name="expressName">物流公司名称</param>
+        /// <param name="expressCode">物流单号</param>
+        /// <param name="callbackUrl">回调地址,回调后,将回调的body数据,调用DecodeSubscribeCallbackData函数解析出结果</param>
+        /// <param name="phone">部分快递公司,如顺丰等,需要传入收件人手机号</param>
         /// <returns></returns>
         public static async Task<ResultReturn> SubscribeExpressCodeAsync(string customerID, string expressName,
             string expressCode, string callbackUrl, string phone = "")
         {
             const string url = "https://poll.kuaidi100.com/poll";
 
+            var comName = getExpressNameToCode(expressName);
+
+            if (string.IsNullOrEmpty(comName))
+            {
+                return new FailResultReturn<Kuai100QueryResult>("查找不到物流公司对应的编号,请检查名称是否正确");
+            }
+
             var json = new JObject()
             {
-                ["company"] = getExpressNameToCode(expressName),
+                ["company"] = comName,
                 ["number"] = expressCode,
                 ["key"] = customerID,
                 ["parameters"] = new JObject()
@@ -192,10 +218,10 @@ namespace Kugar.Tools.Express
             };
         }
 
-        public static async Task<Kuai100QueryResult> GetExpressLogsFreeAsync(string expressName, string expressCode)
-        {
+        //public static async Task<Kuai100QueryResult> GetExpressLogsFreeAsync(string expressName, string expressCode)
+        //{
 
-        }
+        //}
 
         /// <summary>
         /// 解码订阅推送收到的数据
@@ -244,18 +270,24 @@ namespace Kugar.Tools.Express
 
         private static Dictionary<string, string> readFile()
         {
-            var txt = File.ReadAllText(MapJsonFilePath);
+            var provider = new EmbeddedFileProvider(typeof(Kuai100).Assembly); //File.ReadAllText(MapJsonFilePath);
 
-            var json = JObject.Parse(txt);
-
-            var dic = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
-
-            foreach (var pair in json)
+            using (var s = provider.GetFileInfo("kuai100.json").CreateReadStream())
             {
-                dic.Add(pair.Key, pair.Value.ToStringEx());
+                var jsonStr = Encoding.UTF8.GetString(s.ReadAllBytes());
+
+                var json = JObject.Parse(jsonStr);
+
+                var dic = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
+
+                foreach (var pair in json)
+                {
+                    dic.Add(pair.Key, pair.Value.ToStringEx());
+                }
+
+                return dic;
             }
 
-            return dic;
         }
     }
 }
