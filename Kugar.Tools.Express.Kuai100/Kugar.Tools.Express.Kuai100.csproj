@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Description>快递100查询,附常用快递代码</Description>
     <PackageReleaseNotes>1,将json作为内嵌资源
 2.多目标编译,生成2.2,3.0和3.1的dll包</PackageReleaseNotes>
@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kugar.Core.NetCore" Version="1.2.111" />
+    <PackageReference Include="Kugar.Core.NetCore" Version="1.2.112" />
     
   </ItemGroup>
 
