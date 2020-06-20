@@ -3,12 +3,13 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Description>快递100查询,附常用快递代码</Description>
     <PackageReleaseNotes>1,将json作为内嵌资源
 2.多目标编译,生成2.2,3.0和3.1的dll包</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/kugarliyifan/Kugar.Tools.Express.Kuai100</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kugarliyifan/Kugar.Tools.Express.Kuai100.git</RepositoryUrl>
+    <Authors>Kugar</Authors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,11 +31,11 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kugar.Core.NetCore" Version="1.2.100" />
+    <PackageReference Include="Kugar.Core.NetCore" Version="1.2.111" />
     
   </ItemGroup>
 
