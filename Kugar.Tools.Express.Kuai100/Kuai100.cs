@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,8 @@ namespace Kugar.Tools.Express
         /// <returns></returns>
         public static async Task<ResultReturn<Kuai100QueryResult>> GetExpressLogsAsync(string customerID, string key, string expressName, string expressCode, string mobile = "")
         {
+            Debugger.Break();
+
             const string url = "https://poll.kuaidi100.com/poll/query.do";
 
             var comName = getExpressNameToCode(expressName);
@@ -58,8 +61,11 @@ namespace Kugar.Tools.Express
             {
                 ["com"] = comName,
                 ["num"] = expressCode,
-                ["phone"] = mobile,
-                ["resultv2"] = 1
+                ["from"]="",
+                ["phone"] = mobile.ToStringEx(),
+                ["resultv2"] = "2",
+                ["show"]="0",
+                ["order"]= "desc"
             };
 
             var sign = $"{args.ToStringEx(Formatting.None)}{key}{customerID}".MD5_32(true).ToUpper();
@@ -71,6 +77,8 @@ namespace Kugar.Tools.Express
                     .SetParamter("sign", sign)
                     .SetParamter("param", args.ToStringEx(Formatting.None))
                     .Post_StringAsync();
+
+                Debug.WriteLine(resultStr);
 
                 var resultJson = JObject.Parse(resultStr);
 
@@ -120,6 +128,8 @@ namespace Kugar.Tools.Express
         public static async Task<ResultReturn> SubscribeExpressCodeAsync(string customerID, string expressName,
             string expressCode, string callbackUrl, string phone = "")
         {
+            Debugger.Break();
+
             const string url = "https://poll.kuaidi100.com/poll";
 
             var comName = getExpressNameToCode(expressName);
@@ -270,6 +280,8 @@ namespace Kugar.Tools.Express
 
         private static Dictionary<string, string> readFile()
         {
+            Debugger.Break();
+
             var provider = new EmbeddedFileProvider(typeof(Kuai100).Assembly); //File.ReadAllText(MapJsonFilePath);
 
             using (var s = provider.GetFileInfo("kuai100.json").CreateReadStream())
