@@ -8,7 +8,7 @@ namespace Kugar.Tools.Express.Tester
         [TestMethod]
         public void TestMethod1()
         {
-            var t=Kuai100.GetExpressLogsAsync("DA2FF8B2D616E2AD115CBC7A56A28532", "GbCnLBWM16", "韵达快运", "4305842583111").Result;
+            var t=Kuai100.SubscribeExpressCodeAsync("", "韵达快运", "4305842583112", "http://zzl.stntian.com/api/Noitify/DeliverNotify").Result;
 
             var s = Kuai100.ExpressNames;
         }
