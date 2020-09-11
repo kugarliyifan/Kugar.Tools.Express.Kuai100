@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.5</Version>
+    <Version>1.0.8</Version>
     <Description>快递100查询,附常用快递代码</Description>
     <PackageReleaseNotes>1.修复订阅快递单的错误</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/kugarliyifan/Kugar.Tools.Express.Kuai100</PackageProjectUrl>
