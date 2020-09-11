@@ -128,7 +128,7 @@ namespace Kugar.Tools.Express
         public static async Task<ResultReturn> SubscribeExpressCodeAsync(string customerID, string expressName,
             string expressCode, string callbackUrl, string phone = "")
         {
-            Debugger.Break();
+            //Debugger.Break();
 
             const string url = "https://poll.kuaidi100.com/poll";
 
@@ -159,12 +159,11 @@ namespace Kugar.Tools.Express
                 .SetParamter("param", json.ToStringEx(Formatting.None))
                 .Encoding(Encoding.UTF8)
                 .Post_StringAsync();
-
             var result = JObject.Parse(resultStr);
 
             var resultCode = result.GetInt("returnCode");
 
-            if (json.GetBool("result") == true)
+            if (result.GetBool("result") == true)
             {
                 return SuccessResultReturn.Default;
             }
@@ -280,7 +279,7 @@ namespace Kugar.Tools.Express
 
         private static Dictionary<string, string> readFile()
         {
-            Debugger.Break();
+            //Debugger.Break();
 
             var provider = new EmbeddedFileProvider(typeof(Kuai100).Assembly); //File.ReadAllText(MapJsonFilePath);
 
